@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resumen de datos de la semana</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background-color:#eef2f7;
+}
+
+/* BARRA SUPERIOR */
+
+.topbar{
+    background-color:#1f3c5a;
+    color:white;
+    padding:15px;
+    display:flex;
+    align-items:center;
+}
+
+.menu{
+    font-size:24px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+}
+
+.titulo-barra{
+    margin-left:20px;
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+}
+
+/* MENÚ LATERAL */
+
+.sidebar{
+    position:fixed;
+    top:0;
+    left:-250px;
+    width:250px;
+    height:100%;
+    background-color:#1f3c5a;
+    transition:0.3s;
+    z-index:1000;
+    padding-top:20px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.active{
+    left:0;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:15px 20px;
+}
+
+.sidebar a:hover{
+    background-color:#2d547c;
+}
+
+.icono{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#54779c;
+    margin-right:10px;
+}
+
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    display:none;
+}
+
+.overlay.active{
+    display:block;
+}
+
+/* CONTENIDO */
+
+.contenedor{
+    padding:30px;
+}
+
+h1{
+    text-align:center;
+    color:#1f3c5a;
+    margin-bottom:40px;
+}
+
+/* TARJETAS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.card{
+    border:none;
+    background:none;
+    box-shadow:none;
+    padding:0;
+}
+
+.imagen{
+    height:320px;
+    border:2px solid #bfc7d1;
+    border-radius:8px;
+    margin-bottom:20px;
+    overflow:hidden;
+    background:#f8f8f8;
+}
+
+.imagen img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    background: white;
+}
+
+.descripcion{
+    background:#54779c;
+    color:white;
+    border-radius:10px;
+    padding:15px;
+    line-height:1.5;
+    text-align:center;
+    font-weight:bold;
+}
+
+@media(max-width:900px){
+
+.grid{
+    grid-template-columns:1fr;
+}
+
+}
+
+#espacioMenu{
+    flex-grow: 1;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MENÚ LATERAL -->
+
+<div class="sidebar" id="sidebar">
+
+<a href="resumen.html">
+<span class="icono">📊</span> Resumen
+</a>
+
+<a href="buscar.html">
+<span class="icono">🔍</span> Buscar
+</a>
+
+<div id="espacioMenu"></div>
+
+<a href="crearcuenta.html"
+id="crearCuenta">
+<span class="icono">➕</span> Crear cuenta
+</a>
+
+<a href="eliminar.html"
+id="eliminarCuenta">
+<span class="icono">🗑️</span> Eliminar cuenta
+</a>
+
+<a href="index.html">
+<span class="icono">🚪</span> Cerrar sesión
+</a>
+
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="topbar">
+
+    <span class="menu" onclick="toggleMenu()">☰</span>
+
+    <span class="titulo-barra">
+        Cadena de Restaurantes - MIS
+    </span>
+
+</div>
+
+<!-- CONTENIDO -->
+
+<div class="contenedor">
+
+<h1>Resumen de datos de la semana</h1>
+
+<div class="grid">
+
+<div class="card">
+    <div class="imagen">
+        <img src="Ingredientes.jpeg" alt="Gráfico 1">
+    </div>
+    <div class="descripcion">
+        Ingredientes que llegaron, se usaron y expiraron con sus cantidades actuales en inventario.
+    </div>
+</div>
+
+<div class="card">
+    <div class="imagen">
+        <img src="atencionCliente.jpeg" alt="Gráfico 2">
+    </div>
+    <div class="descripcion">
+        Atención de clientes por hora y día.
+    </div>
+</div>
+
+<div class="card">
+    <div class="imagen">
+        <img src="platos.jpeg" alt="Gráfico 3">
+    </div>
+    <div class="descripcion">
+        Platos pedidos por los clientes durante la semana.
+    </div>
+</div>
+
+<div class="card">
+    <div class="imagen">
+        <img src="porcentajeIng.jpeg" alt="Gráfico 4">
+    </div>
+    <div class="descripcion">
+        Porcentaje de ingredientes que llegaron, se utilizaron y expiraron.
+    </div>
+</div>
+
+<div class="card">
+    <div class="imagen">
+        <img src="porcentajeH.D.jpeg" alt="Gráfico 5">
+    </div>
+    <div class="descripcion">
+        Porcentaje de clientes atendidos por hora y por día.
+    </div>
+</div>
+
+<div class="card">
+    <div class="imagen">
+        <img src="porcentajePlatos.jpeg" alt="Gráfico 6">
+    </div>
+    <div class="descripcion">
+        Porcentaje de platos pedidos por los clientes.
+    </div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+window.onload = function(){
+
+    let tipo = localStorage.getItem("tipoUsuario");
+
+    if(tipo == "sucursal"){
+
+        document.getElementById("crearCuenta").style.display = "none";
+        document.getElementById("eliminarCuenta").style.display = "none";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

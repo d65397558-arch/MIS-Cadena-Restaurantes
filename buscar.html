@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buscar</title>
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #eef2f7;
+}
+
+/* MENÚ SUPERIOR */
+.topbar{
+    background-color:#1f3c5a;
+    color:white;
+    padding:15px;
+    display:flex;
+    align-items:center;
+}
+
+.menu{
+    font-size:24px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+}
+
+.titulo-barra{
+    margin-left:20px;
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+}
+
+/* MENÚ LATERAL */
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #1f3c5a;
+    transition: 0.3s;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    z-index: 1000;
+
+    display:flex;
+    flex-direction: column;
+}
+
+.sidebar.active{
+    left: 0;
+}
+
+.sidebar a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+}
+
+.sidebar a:hover{
+    background-color: #2d547c;
+}
+
+.espacio{
+    height: 250px;
+}
+
+/* FONDO OSCURO */
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: none;
+}
+
+.overlay.active{
+    display: block;
+}
+
+/* CONTENIDO */
+.contenido{
+    padding: 20px;
+}
+
+#cabecera{
+    background-color: #1f3c5a;
+    color: white;
+    padding: 15px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.panel{
+    border: 1px solid #1f3c5a;
+    border-top: none;
+    background-color: white;
+    padding: 15px;
+    border-radius: 0 0 8px 8px;
+    margin-bottom: 15px;
+}
+
+button{
+    cursor: pointer;
+}
+
+.btn-filtro{
+    background-color: #1f3c5a;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.opciones{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+}
+
+.opcion{
+    padding: 15px;
+    border: 2px solid #54779c;
+    border-radius: 10px;
+    background-color: white;
+    color: #1f3c5a;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.opcion:hover{
+    background-color: #54779c;
+    color: white;
+}
+
+select{
+    padding: 8px;
+}
+
+.icono{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #54779c;
+    margin-right: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENÚ LATERAL -->
+<div class="sidebar" id="sidebar">
+
+<a href="resumen.html">
+    <span class="icono">📊</span> Resumen
+</a>
+
+<a href="buscar.html">
+    <span class="icono">🔍</span> Buscar
+</a>
+
+<div style="height:450px;"></div>
+
+<a href="crearcuenta.html">
+    <span class="icono">➕</span> Crear cuenta
+</a>
+
+<a href="eliminar.html">
+    <span class="icono">🗑️</span> Eliminar cuenta
+</a>
+
+<a href="index.html">
+    <span class="icono">🚪</span> Cerrar sesión
+</a>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<!-- BARRA SUPERIOR -->
+<div class="topbar">
+
+    <span class="menu" onclick="toggleMenu()">☰</span>
+
+    <span class="titulo-barra">
+        Cadena de Restaurantes - MIS
+    </span>
+
+</div>
+
+<div class="contenido">
+
+<div id="cabecera" onclick="toggleFiltros()">
+Buscar por palabra clave ▲
+</div>
+
+<div id="filtros" class="panel" style="display:none;">
+
+<p>
+<input type="radio" name="filtro">
+Ingredientes
+</p>
+
+<p>
+<input type="radio" name="filtro">
+Platos
+</p>
+
+<p>
+<input type="radio" name="filtro">
+Atención por hora
+</p>
+
+<p>
+<input type="radio" name="filtro">
+Atención por día
+</p>
+
+<label>Ordenar por cantidad:</label>
+
+<select>
+<option>Mayor a menor</option>
+<option>Menor a mayor</option>
+</select>
+
+<br><br>
+
+<button class="btn-filtro" onclick="aplicarFiltros()">
+Aplicar filtros
+</button>
+
+</div>
+
+<div class="opciones">
+
+<button class="opcion" onclick="mostrarOpcion(1)">Opción 1</button>
+<button class="opcion" onclick="mostrarOpcion(2)">Opción 2</button>
+<button class="opcion" onclick="mostrarOpcion(3)">Opción 3</button>
+<button class="opcion" onclick="mostrarOpcion(4)">Opción 4</button>
+<button class="opcion" onclick="mostrarOpcion(5)">Opción 5</button>
+<button class="opcion" onclick="mostrarOpcion(6)">Opción 6</button>
+<button class="opcion" onclick="mostrarOpcion(7)">Opción 7</button>
+<button class="opcion" onclick="mostrarOpcion(8)">Opción 8</button>
+<button class="opcion" onclick="mostrarOpcion(9)">Opción 9</button>
+<button class="opcion" onclick="mostrarOpcion(10)">Opción 10</button>
+<button class="opcion" onclick="mostrarOpcion(11)">Opción 11</button>
+<button class="opcion" onclick="mostrarOpcion(12)">Opción 12</button>
+<button class="opcion" onclick="mostrarOpcion(13)">Opción 13</button>
+<button class="opcion" onclick="mostrarOpcion(14)">Opción 14</button>
+<button class="opcion" onclick="mostrarOpcion(15)">Opción 15</button>
+<button class="opcion" onclick="mostrarOpcion(16)">Opción 16</button>
+<button class="opcion" onclick="mostrarOpcion(17)">Opción 17</button>
+<button class="opcion" onclick="mostrarOpcion(18)">Opción 18</button>
+<button class="opcion" onclick="mostrarOpcion(19)">Opción 19</button>
+<button class="opcion" onclick="mostrarOpcion(20)">Opción 20</button>
+<button class="opcion" onclick="mostrarOpcion(21)">Opción 21</button>
+<button class="opcion" onclick="mostrarOpcion(22)">Opción 22</button>
+<button class="opcion" onclick="mostrarOpcion(23)">Opción 23</button>
+<button class="opcion" onclick="mostrarOpcion(24)">Opción 24</button>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+function toggleFiltros(){
+
+    let filtros = document.getElementById("filtros");
+    let cabecera = document.getElementById("cabecera");
+
+    if(filtros.style.display === "none"){
+
+        filtros.style.display = "block";
+        cabecera.innerHTML = "Buscar por palabra clave ▼";
+
+        // cuando está abierto: SIN separación
+        cabecera.style.marginBottom = "0px";
+
+    }else{
+
+        filtros.style.display = "none";
+        cabecera.innerHTML = "Buscar por palabra clave ▲";
+
+        // cuando está cerrado: CON separación
+        cabecera.style.marginBottom = "10px";
+    }
+}
+function aplicarFiltros(){
+}
+
+function mostrarOpcion(numero){
+
+    window.location.href = "detalle.html";
+
+}
+
+</script>
+
+</body>
+</html>

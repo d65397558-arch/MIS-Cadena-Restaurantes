@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nombre del dato que se esta visualizando</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background-color:#eef2f7;
+}
+
+/* BARRA SUPERIOR */
+
+.topbar{
+    background-color:#1f3c5a;
+    color:white;
+    padding:15px;
+    font-size:24px;
+    cursor:pointer;
+}
+
+.topbar{
+    background-color:#1f3c5a;
+    color:white;
+    padding:15px;
+    display:flex;
+    align-items:center;
+}
+
+.menu{
+    font-size:24px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+}
+
+.titulo-barra{
+    margin-left:20px;
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+}
+
+/* MENÚ LATERAL */
+
+.sidebar{
+    position:fixed;
+    top:0;
+    left:-250px;
+    width:250px;
+    height:100%;
+    background-color:#1f3c5a;
+    transition:0.3s;
+    z-index:1000;
+    padding-top:20px;
+}
+
+.sidebar.active{
+    left:0;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:15px 20px;
+}
+
+.sidebar a:hover{
+    background-color:#2d547c;
+}
+
+.icono{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#54779c;
+    margin-right:10px;
+}
+
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    display:none;
+}
+
+.overlay.active{
+    display:block;
+}
+
+/* CONTENIDO */
+
+.contenido{
+    padding:30px;
+}
+
+.encabezado{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.titulo{
+    width:50%;
+}
+
+/* FILTROS */
+
+.filtros{
+    display:flex;
+    gap:10px;
+    width:50%;
+    align-items:center;
+    flex-wrap:nowrap;
+}
+
+.periodo{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#1f3c5a;
+    color:white;
+    border-radius:8px;
+    font-weight:bold;
+    padding:10px;
+}
+
+.filtros select{
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:#1f3c5a;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.periodo,
+.filtros select,
+#comparacion{
+    flex:1;
+    min-width:0;
+}
+
+#comparacion select{
+    width:100%;
+}
+
+/* CONTENEDOR PRINCIPAL */
+
+.contenedor{
+    display:flex;
+    gap:25px;
+    align-items:stretch;
+}
+
+/* CUADRO GRÁFICO */
+
+.grafico{
+    flex:1;
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0px 4px 12px rgba(0,0,0,0.15);
+}
+
+.imagen-grafico{
+    height:450px;
+    border:none;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.imagen-grafico img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+/* CUADRO ANÁLISIS */
+
+.analisis{
+    flex:1;
+    background:white;
+    border:3px solid #54779c;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0px 4px 12px rgba(0,0,0,0.15);
+}
+
+.analisis h2{
+    background:#1f3c5a;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.texto-analisis{
+    background:#dfe8f1;
+    border:2px solid #54779c;
+    color:#1f3c5a;
+    padding:15px;
+    border-radius:10px;
+    line-height:1.8;
+    text-align:justify;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MENÚ LATERAL -->
+
+<div class="sidebar" id="sidebar">
+
+<a href="resumen.html">
+<span class="icono">📊</span> Resumen
+</a>
+
+<a href="buscar.html">
+<span class="icono">🔍</span> Buscar
+</a>
+
+<div style="height:450px;"></div>
+
+<a href="crearcuenta.html">
+<span class="icono">➕</span> Crear cuenta
+</a>
+
+<a href="eliminar.html">
+<span class="icono">🗑️</span> Eliminar cuenta
+</a>
+
+<a href="index.html">
+<span class="icono">🚪</span> Cerrar sesión
+</a>
+
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<!-- BARRA SUPERIOR -->
+
+<div class="topbar">
+
+    <span class="menu" onclick="toggleMenu()">☰</span>
+
+    <span class="titulo-barra">
+        Cadena de Restaurantes - MIS
+    </span>
+
+</div>
+
+<!-- CONTENIDO -->
+
+<div class="contenido">
+<div class="encabezado">
+
+<h1 class="titulo">
+Nombre del dato que se esta visualizando
+</h1>
+
+<div class="filtros">
+
+<div class="periodo">
+Última semana
+</div>
+
+<select>
+<option>Sucursal 1</option>
+<option>Sucursal 2</option>
+<option>Sucursal 3</option>
+<option>Sucursal 4</option>
+<option>Sucursal 5</option>
+</select>
+
+<select id="sucursal2" onchange="mostrarComparacion()">
+<option value="">Seleccionar segunda sucursal</option>
+<option>Sucursal 1</option>
+<option>Sucursal 2</option>
+<option>Sucursal 3</option>
+<option>Sucursal 4</option>
+<option>Sucursal 5</option>
+</select>
+
+<select id="tipoGrafico" onchange="cambiarGrafico()">
+    <option value="barras.png">Gráfico de barras</option>
+    <option value="circular.png">Gráfico circular</option>
+    <option value="lineas.png">Gráfico de líneas</option>
+</select>
+
+<div id="comparacion" style="display:none;">
+
+<select>
+<option>Comparar</option>
+<option>Combinar</option>
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="contenedor">
+
+<!-- GRÁFICO -->
+
+<div class="grafico">
+
+<div class="imagen-grafico">
+
+<img id="grafico" src="barras.png" alt="Gráfico">
+
+</div>
+
+</div>
+
+<!-- ANÁLISIS -->
+
+<div class="analisis">
+
+<h2>Análisis del gráfico</h2>
+
+<div class="texto-analisis">
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.
+
+<br><br>
+
+Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.
+
+<br><br>
+
+Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.
+
+<br><br>
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.
+
+<br><br>
+
+Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+function mostrarComparacion(){
+
+    let sucursal2 = document.getElementById("sucursal2");
+    let comparacion = document.getElementById("comparacion");
+
+    if(sucursal2.value !== ""){
+        comparacion.style.display = "block";
+    }else{
+        comparacion.style.display = "none";
+    }
+}
+
+function cambiarGrafico(){
+
+    let selector = document.getElementById("tipoGrafico");
+    let imagen = document.getElementById("grafico");
+
+    imagen.src = selector.value;
+}
+
+</script>
+
+</body>
+</html>
