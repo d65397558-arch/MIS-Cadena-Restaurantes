@@ -149,7 +149,22 @@ h1{
     text-align:center;
     font-weight:bold;
 }
+.alerta{
+    color:#d32f2f;
+    font-weight:bold;
+    text-align:center;
+    animation: brillo 1s infinite alternate;
+}
 
+@keyframes brillo{
+    from{
+        opacity:0.4;
+    }
+    to{
+        opacity:1;
+        text-shadow:0 0 10px red;
+    }
+}
 @media(max-width:900px){
 
 .grid{
@@ -164,7 +179,7 @@ h1{
 
 </style>
 </head>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <body>
 
 <!-- MENÚ LATERAL -->
@@ -246,8 +261,10 @@ id="eliminarCuenta">
 
 <div class="card">
     <div class="imagen">
-        <img src="porcentajeIng.jpeg" alt="Gráfico 4">
+    <div style="height:380px;">
+        <canvas id="graficoIngredientes"></canvas>
     </div>
+</div>
     <div class="descripcion">
         Porcentaje de ingredientes que llegaron, se utilizaron y expiraron.
     </div>
@@ -255,8 +272,8 @@ id="eliminarCuenta">
 
 <div class="card">
     <div class="imagen">
-        <img src="porcentajeH.D.jpeg" alt="Gráfico 5">
-    </div>
+    <canvas id="graficoClientes"></canvas>
+</div>
     <div class="descripcion">
         Porcentaje de clientes atendidos por hora y por día.
     </div>
@@ -264,8 +281,8 @@ id="eliminarCuenta">
 
 <div class="card">
     <div class="imagen">
-        <img src="porcentajePlatos.jpeg" alt="Gráfico 6">
-    </div>
+    <canvas id="graficoPlatos"></canvas>
+</div>
     <div class="descripcion">
         Porcentaje de platos pedidos por los clientes.
     </div>
@@ -294,6 +311,394 @@ window.onload = function(){
     }
 
 }
+// Gráfico de ingredientes
+
+let nombresIngredientes = [
+    "Ingrediente 1",
+    "Ingrediente 2",
+    "Ingrediente 3",
+    "Ingrediente 4",
+    "Ingrediente 5"
+];
+
+let porcentajeStock = [92, 75, 48, 20, 8];
+
+new Chart(document.getElementById("graficoIngredientes"),{
+
+    type:"line",
+
+    data:{
+
+        labels:nombresIngredientes,
+
+        datasets:[{
+
+            label:"Nivel de inventario (%)",
+
+            data:porcentajeStock,
+
+            borderColor:"#1565C0",
+
+            backgroundColor:"rgba(21,101,192,0.12)",
+
+            borderWidth:4,
+
+            fill:true,
+
+            tension:0.45,
+
+            pointRadius:[6,6,7,7,8],
+
+            pointHoverRadius:[8,8,9,9,11],
+
+            pointBackgroundColor:[
+                "#43A047",
+                "#66BB6A",
+                "#FBC02D",
+                "#FB8C00",
+                "#FF1744"
+            ],
+
+            pointBorderColor:[
+                "#43A047",
+                "#66BB6A",
+                "#FBC02D",
+                "#FB8C00",
+                "#FFFFFF"
+            ],
+
+            pointBorderWidth:[
+                2,
+                2,
+                2,
+                2,
+                4
+            ]
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+        maintainAspectRatio:false,
+
+        plugins:{
+
+            title:{
+
+                display:true,
+
+                text:"Nivel actual del inventario",
+
+                color:"#1f3c5a",
+
+                font:{
+                    size:16,
+                    weight:"bold"
+                }
+
+            },
+
+            legend:{
+                position:"bottom"
+            },
+
+            tooltip:{
+
+                callbacks:{
+
+                    label:function(context){
+
+                        if(context.parsed.y<=20){
+
+                            return "Stock crítico: " + context.parsed.y + "%";
+
+                        }
+
+                        return "Stock disponible: " + context.parsed.y + "%";
+
+                    }
+
+                }
+
+            }
+
+        },
+
+        scales:{
+
+            y:{
+
+                beginAtZero:true,
+
+                max:100,
+
+                ticks:{
+
+                    callback:function(value){
+
+                        return value+"%";
+
+                    }
+
+                },
+
+                title:{
+
+                    display:true,
+
+                    text:"Porcentaje"
+
+                }
+
+            },
+
+            x:{
+
+                title:{
+
+                    display:true,
+
+                    text:"Ingredientes"
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+// =========================
+// Gráfico de clientes
+// =========================
+
+new Chart(document.getElementById("graficoClientes"),{
+
+    type:"doughnut",
+
+    data:{
+
+        labels:[
+            "Atención por hora",
+            "Atención por día"
+        ],
+
+        datasets:[{
+
+            data:[58,42],
+
+            backgroundColor:[
+                "#1565C0",
+                "#26A69A"
+            ],
+
+            borderColor:"#FFFFFF",
+
+            borderWidth:4,
+
+            hoverBorderWidth:5,
+
+            hoverOffset:18
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        cutout:"65%",
+
+        plugins:{
+
+            title:{
+
+                display:true,
+
+                text:"Distribución porcentual de atención",
+
+                color:"#1f3c5a",
+
+                font:{
+                    size:17,
+                    weight:"bold"
+                }
+
+            },
+
+            legend:{
+
+                position:"bottom",
+
+                labels:{
+                    padding:18,
+                    usePointStyle:true,
+                    pointStyle:"circle",
+                    font:{
+                        size:13
+                    }
+                }
+
+            },
+
+            tooltip:{
+
+                backgroundColor:"#1f3c5a",
+
+                callbacks:{
+
+                    label:function(context){
+
+                        return context.label + ": " + context.parsed + "%";
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+// =========================
+// Gráfico de platos
+// =========================
+
+new Chart(document.getElementById("graficoPlatos"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:[
+            "Menú A",
+            "Menú B",
+            "Menú C",
+            "Menú D",
+            "Menú E"
+        ],
+
+        datasets:[{
+
+            label:"Preferencia (%)",
+
+            data:[36,28,19,11,6],
+
+            backgroundColor:[
+                "#1565C0",
+                "#42A5F5",
+                "#66BB6A",
+                "#FFA726",
+                "#EF5350"
+            ],
+
+            borderRadius:12,
+
+            borderSkipped:false,
+
+            maxBarThickness:45
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        plugins:{
+
+            title:{
+
+                display:true,
+
+                text:"Porcentaje de platos pedidos",
+
+                color:"#1f3c5a",
+
+                font:{
+                    size:17,
+                    weight:"bold"
+                }
+
+            },
+
+            legend:{
+                display:false
+            },
+
+            tooltip:{
+
+                backgroundColor:"#1f3c5a",
+
+                callbacks:{
+
+                    label:function(context){
+
+                        return context.parsed.y + "% de pedidos";
+
+                    }
+
+                }
+
+            }
+
+        },
+
+        scales:{
+
+            x:{
+
+                grid:{
+                    display:false
+                }
+
+            },
+
+            y:{
+
+                beginAtZero:true,
+
+                max:40,
+
+                ticks:{
+
+                    callback:function(value){
+
+                        return value + "%";
+
+                    }
+
+                },
+
+                title:{
+
+                    display:true,
+
+                    text:"Porcentaje"
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
 
 </script>
 
