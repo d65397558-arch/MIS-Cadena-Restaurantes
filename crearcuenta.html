@@ -57,8 +57,10 @@ body{
     transition:0.3s;
     z-index:1000;
     padding-top:20px;
-}
 
+    display:flex;
+    flex-direction:column;
+}
 .sidebar.active{
     left:0;
 }
@@ -149,6 +151,9 @@ select:focus{
 .boton:hover{
     background-color:#1f3c5a;
 }
+#espacioMenu{
+    flex-grow:1;
+}
 
 </style>
 </head>
@@ -167,7 +172,7 @@ select:focus{
 <span class="icono">🔍</span> Buscar
 </a>
 
-<div style="height:450px;"></div>
+<div id="espacioMenu"></div>
 
 <a href="crearcuenta.html">
 <span class="icono">➕</span> Crear cuenta

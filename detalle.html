@@ -65,6 +65,9 @@ body{
     transition:0.3s;
     z-index:1000;
     padding-top:20px;
+
+    display:flex;
+    flex-direction:column;
 }
 
 .sidebar.active{
@@ -230,6 +233,10 @@ body{
     text-align:justify;
 }
 
+#espacioMenu{
+    flex-grow:1;
+}
+
 </style>
 </head>
 
@@ -247,7 +254,7 @@ body{
 <span class="icono">🔍</span> Buscar
 </a>
 
-<div style="height:450px;"></div>
+<div id="espacioMenu"></div>
 
 <a href="crearcuenta.html">
 <span class="icono">➕</span> Crear cuenta

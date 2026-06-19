@@ -48,11 +48,10 @@ body{
     background-color: #1f3c5a;
     transition: 0.3s;
     padding-top: 20px;
-    padding-bottom: 50px;
     z-index: 1000;
 
     display:flex;
-    flex-direction: column;
+    flex-direction:column;
 }
 
 .sidebar.active{
@@ -70,9 +69,6 @@ body{
     background-color: #2d547c;
 }
 
-.espacio{
-    height: 250px;
-}
 
 /* FONDO OSCURO */
 .overlay{
@@ -161,6 +157,10 @@ select{
     background-color: #54779c;
     margin-right: 10px;
 }
+
+#espacioMenu{
+    flex-grow:1;
+}
 </style>
 </head>
 
@@ -177,7 +177,7 @@ select{
     <span class="icono">🔍</span> Buscar
 </a>
 
-<div style="height:450px;"></div>
+<div id="espacioMenu"></div>
 
 <a href="crearcuenta.html">
     <span class="icono">➕</span> Crear cuenta
